@@ -1,0 +1,51 @@
+{
+  "name": "monorepo-starter-essentials",
+  "version": "1.0.0",
+  "description": "Monorepo starter bundled with essential configurations",
+  "keywords": [
+    "monorepo",
+    "turborepo",
+    "starter",
+    "essentials",
+    "mkit"
+  ],
+  "scripts": {
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "lint": "cross-env TIMING=1 turbo run lint",
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "test:apps": "turbo run test --filter=./apps/*",
+    "test:packages": "turbo run test --filter=./packages/*",
+    "prepare": "husky install~"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
+    "@packages/eslint-config-custom": "*",
+    "cross-env": "^7.0.3",
+    "husky": "^8.0.2",
+    "prettier": "^2.8.1",
+    "release-please": "^15.0.0",
+    "turbo": "latest"
+  },
+  "private": true,
+  "packageManager": "yarn@1.22.19",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "author": "MK IT Ltd. <hi@mkit.io>",
+  "homepage": "https://github.com/MK-IT/monorepo-starter-essentials",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MK-IT/monorepo-starter-essentials.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MK-IT/monorepo-starter-essentials/issues"
+  },
+  "license": "MIT"
+}
