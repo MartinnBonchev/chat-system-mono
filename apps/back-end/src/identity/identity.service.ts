@@ -63,14 +63,6 @@ export class IdentityService {
     };
   }
 
-  async validateAccessToken(accessToken: string) {
-    const a = await this.jwtService.verifyAsync<ValidUser>(accessToken);
-
-    console.log({ a });
-
-    return a;
-  }
-
   async generateJWTToken(user: ValidUser) {
     const accessToken = this.jwtService.sign(user);
 
