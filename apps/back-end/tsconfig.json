@@ -21,6 +21,7 @@
       "@utils/*": ["src/utils/*"],
       "@guards/*": ["src/guards/*"],
       "@services/*": ["src/services/*"],
+      "@decorators/*": ["src/decorators/*"],
     }
   }
 }

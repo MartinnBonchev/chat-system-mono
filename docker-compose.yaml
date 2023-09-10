@@ -4,7 +4,7 @@ services:
   postgre:
     image: 'postgres:latest'
     env_file:
-      - .env
+      - ./apps/back-end/.env
     ports:
       - '5432:5432'
 

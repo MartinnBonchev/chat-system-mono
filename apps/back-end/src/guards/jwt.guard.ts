@@ -5,6 +5,7 @@ import { AuthGuard } from '@nestjs/passport';
 export default class JwtAuthGuard extends AuthGuard('jwt') {
   override async canActivate(context: ExecutionContext) {
     const canActivate: any = await super.canActivate(context);
+
     return canActivate;
   }
 }

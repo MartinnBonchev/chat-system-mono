@@ -3,7 +3,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column({ type: 'text' })
   email: string;
@@ -12,12 +12,12 @@ export class User {
   password_hash: string;
 
   @Column({ type: 'timestamp', default: new Date() })
-  created_at: Date;
+  created_at?: Date;
 
   @Column({ type: 'timestamp', default: new Date() })
-  updated_at: Date;
+  updated_at?: Date;
 
-  constructor() {
-    Object.assign(this);
+  constructor(user: User) {
+    Object.assign(this, user);
   }
 }

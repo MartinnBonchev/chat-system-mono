@@ -1,12 +1,19 @@
 import { EntityManager } from 'typeorm';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { compare, hash } from '@utils/encrypt.utils';
 import RegisterRequestDto from './dto/register.dto';
 import LoginRequestDto from './dto/login.dto';
-import { JwtService } from '@nestjs/jwt';
 import { User } from './entities/identity.entity';
-import { compare } from '@utils/encrypt.utils';
 
-interface ValidUser {}
+export interface ValidUser {
+  id: number;
+  email: string;
+}
 
 @Injectable()
 export class IdentityService {
@@ -14,9 +21,23 @@ export class IdentityService {
     private readonly entityManager: EntityManager,
     private readonly jwtService: JwtService,
   ) {}
-  async register({ email, password }: RegisterRequestDto) {}
+  async register({ email, password }: RegisterRequestDto) {
+    const existingUser = await this.entityManager.findOneBy(User, { email });
 
-  async login({ email, password }: LoginRequestDto) {
+    if (existingUser) {
+      return new ConflictException('User already exists!');
+    }
+
+    const password_hash = hash(password);
+    const user = new User({ email, password_hash });
+
+    await this.entityManager.save(user);
+  }
+
+  async login({
+    email,
+    password,
+  }: LoginRequestDto): Promise<{ user: ValidUser; access_token: string }> {
     const user = await this.validateUser(email, password);
 
     if (!user) {
@@ -66,6 +87,6 @@ export class IdentityService {
       return null;
     }
 
-    return user;
+    return { email: user.email, id: user.id };
   }
 }
