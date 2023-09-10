@@ -80,5 +80,7 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   },
-  "workspaces":["@nestjs/**"]
+  "workspaces": {
+    "nohoist": ["@nestjs/**"]
+  }
 }
