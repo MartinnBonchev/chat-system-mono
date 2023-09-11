@@ -32,6 +32,8 @@ export class IdentityService {
     const user = new User({ email, password_hash });
 
     await this.entityManager.save(user);
+
+    return { success: true };
   }
 
   async login({
