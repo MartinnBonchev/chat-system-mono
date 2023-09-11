@@ -14,10 +14,10 @@ export class UserChatRole {
   })
   role: 'admin' | 'user';
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { eager: true })
   user: User;
 
-  @ManyToOne(() => ChatRoom)
+  @ManyToOne(() => ChatRoom, { eager: true })
   chatRoom: ChatRoom;
 
   constructor(role: UserChatRole) {

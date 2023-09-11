@@ -16,10 +16,10 @@ export class Message {
   @Column({ type: 'timestamp', default: new Date() })
   updated_at?: Date;
 
-  @ManyToOne(() => ChatRoom)
+  @ManyToOne(() => ChatRoom, { eager: true })
   user: User;
 
-  @ManyToOne(() => ChatRoom, (chatRoom) => chatRoom.messages)
+  @ManyToOne(() => ChatRoom, (chatRoom) => chatRoom.messages, { eager: true })
   chat_room: ChatRoom;
 
   constructor(message: Message) {

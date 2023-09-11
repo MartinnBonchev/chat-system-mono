@@ -23,11 +23,11 @@ export class ChatRoom {
   @Column({ type: 'timestamp', default: new Date() })
   updated_at?: Date;
 
-  @ManyToMany(() => User)
+  @ManyToMany(() => User, { eager: true })
   @JoinTable()
   users: User[];
 
-  @OneToMany(() => Message, (message) => message.chat_room)
+  @OneToMany(() => Message, (message) => message.chat_room, { eager: true })
   messages: Message[];
 
   constructor(chatRoom: ChatRoom) {
