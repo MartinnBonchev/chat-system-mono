@@ -12,7 +12,7 @@ import { Message } from './message.entity';
 @Entity()
 export class ChatRoom {
   @PrimaryGeneratedColumn('uuid')
-  id?: number;
+  id: string;
 
   @Column({ type: 'text' })
   name: string;

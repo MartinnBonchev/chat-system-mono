@@ -5,7 +5,7 @@ import { User } from 'src/identity/entities/identity.entity';
 @Entity()
 export class UserChatRole {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column({
     type: 'enum',
