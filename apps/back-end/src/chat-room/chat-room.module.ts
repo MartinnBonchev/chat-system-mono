@@ -6,6 +6,7 @@ import { ChatRoom } from './entities/chat-room.entity';
 import { Message } from './entities/message.entity';
 import { UserChatRole } from './entities/chat-room-role.entity';
 import { IdentityModule } from 'src/identity/identity.module';
+import { ChatRoomController } from './chat-room.controller';
 
 @Module({
   imports: [
@@ -14,5 +15,6 @@ import { IdentityModule } from 'src/identity/identity.module';
     IdentityModule,
   ],
   providers: [ChatRoomGateway, ChatRoomService],
+  controllers: [ChatRoomController],
 })
 export class ChatRoomModule {}
