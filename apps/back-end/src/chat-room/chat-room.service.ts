@@ -87,6 +87,10 @@ export class ChatRoomService {
     }
   }
 
+  async getAllRooms(userId: string) {
+    const user = await this.userRepo.findOneOrFail({ where: { id: userId } });
+    return this.chatRoomRepo.find({ where: { users: [user] } });
+  }
   async sendMessage(chatId: string, senderId: string, messageFromUser: string) {
     const room = await this.chatRoomRepo.findOneOrFail({
       where: { id: chatId },
