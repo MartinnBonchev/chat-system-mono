@@ -4,7 +4,7 @@ import { User } from 'src/identity/entities/identity.entity';
 
 @Entity()
 export class UserChatRole {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
   @Column({
@@ -12,7 +12,7 @@ export class UserChatRole {
     enum: ['admin', 'user'],
     default: 'user',
   })
-  role: string;
+  role: 'admin' | 'user';
 
   @ManyToOne(() => User)
   user: User;
