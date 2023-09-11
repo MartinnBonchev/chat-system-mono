@@ -3,6 +3,7 @@
   // Code spellcheck to ignore project-specific words
   "cSpell.words": [
     "commitlint",
+    "hookform",
     "mkit",
     "nestjs",
     "nextjs",
