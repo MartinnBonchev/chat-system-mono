@@ -1,4 +1,4 @@
-import { EntityManager } from 'typeorm';
+import { Repository } from 'typeorm';
 import {
   BadRequestException,
   ConflictException,
@@ -9,31 +9,33 @@ import { compare, hash } from '@utils/encrypt.utils';
 import RegisterRequestDto from './dto/register.dto';
 import LoginRequestDto from './dto/login.dto';
 import { User } from './entities/identity.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 export interface ValidUser {
-  id: number;
+  id: string;
   email: string;
 }
 
 @Injectable()
 export class IdentityService {
   constructor(
-    private readonly entityManager: EntityManager,
+    @InjectRepository(User)
+    private readonly userRepo: Repository<User>,
     private readonly jwtService: JwtService,
   ) {}
   async register({ email, password }: RegisterRequestDto) {
-    const existingUser = await this.entityManager.findOneBy(User, { email });
+    const existingUser = await this.userRepo.findOne({ where: { email } });
 
     if (existingUser) {
       return new ConflictException('User already exists!');
     }
 
-    const password_hash = hash(password);
-    const user = new User({ email, password_hash });
+    const user = this.userRepo.create({
+      email,
+      password_hash: hash(password),
+    });
 
-    await this.entityManager.save(user);
-
-    return { success: true };
+    await this.userRepo.save(user);
   }
 
   async login({
@@ -52,8 +54,8 @@ export class IdentityService {
     return { user, access_token };
   }
 
-  async getOneById(id: number): Promise<MaybeNullable<ValidUser>> {
-    const user = await this.entityManager.findOneBy(User, { id });
+  async getOneById(id: string): Promise<MaybeNullable<ValidUser>> {
+    const user = await this.userRepo.findOne({ where: { id } });
 
     if (!user) {
       return null;
@@ -75,7 +77,7 @@ export class IdentityService {
     email: string,
     password: string,
   ): Promise<MaybeNullable<ValidUser>> {
-    const dbUser = await this.entityManager.findOneBy(User, { email });
+    const dbUser = await this.userRepo.findOne({ where: { email } });
 
     if (!dbUser) {
       return null;
