@@ -111,8 +111,10 @@ export class ChatRoomService {
 
     room.messages = [...room.messages, message];
 
-    await this.messageRepo.save(message);
+    const savedMessage = await this.messageRepo.save(message);
 
-    return this.chatRoomRepo.save(room);
+    this.chatRoomRepo.save(room);
+
+    return savedMessage;
   }
 }
