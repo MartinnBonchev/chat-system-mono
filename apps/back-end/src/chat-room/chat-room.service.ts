@@ -41,13 +41,15 @@ export class ChatRoomService {
 
   async addToRoom(
     roomId: string,
-    userId: string,
+    userEmail: string,
     role: 'admin' | 'user' = 'user',
   ) {
     const room = await this.chatRoomRepo.findOneOrFail({
       where: { id: roomId },
     });
-    const user = await this.userRepo.findOneOrFail({ where: { id: userId } });
+    const user = await this.userRepo.findOneOrFail({
+      where: { email: userEmail },
+    });
 
     const userRole = this.userChatRoleRepo.create({
       chatRoom: room,
@@ -60,11 +62,13 @@ export class ChatRoomService {
 
     return this.chatRoomRepo.save(room);
   }
-  async removeFromRoom(roomId: string, userId: string) {
+  async removeFromRoom(roomId: string, userEmail: string) {
     const room = await this.chatRoomRepo.findOneOrFail({
       where: { id: roomId },
     });
-    const user = await this.userRepo.findOneOrFail({ where: { id: userId } });
+    const user = await this.userRepo.findOneOrFail({
+      where: { email: userEmail },
+    });
 
     const userRole = await this.userChatRoleRepo.findOneOrFail({
       where: {

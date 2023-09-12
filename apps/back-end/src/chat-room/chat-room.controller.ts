@@ -39,17 +39,17 @@ export class ChatRoomController {
   @Patch('user/:id')
   async addToRoom(
     @Param('id') roomId: string,
-    @Body('userId') userId: string,
+    @Body('userEmail') userEmail: string,
     @Body('role') role: 'admin' | 'user' = 'user',
   ) {
-    return this.chatRoomService.addToRoom(roomId, userId, role);
+    return this.chatRoomService.addToRoom(roomId, userEmail, role);
   }
 
   @Delete('user/:id')
   async removeFromRoom(
     @Param('id') roomId: string,
-    @Body('userId') userId: string,
+    @Body('userEmail') userEmail: string,
   ) {
-    return this.removeFromRoom(roomId, userId);
+    return this.removeFromRoom(roomId, userEmail);
   }
 }
