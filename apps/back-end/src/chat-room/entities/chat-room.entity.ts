@@ -23,6 +23,9 @@ export class ChatRoom {
   @Column({ type: 'timestamp', default: new Date() })
   updated_at?: Date;
 
+  @Column({ type: 'boolean' })
+  hasActiveScreenShare: boolean;
+
   @ManyToMany(() => User, { eager: true })
   @JoinTable()
   users: User[];

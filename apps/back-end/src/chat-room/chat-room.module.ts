@@ -16,5 +16,6 @@ import { ChatRoomController } from './chat-room.controller';
   ],
   providers: [ChatRoomGateway, ChatRoomService],
   controllers: [ChatRoomController],
+  exports: [TypeOrmModule],
 })
 export class ChatRoomModule {}
